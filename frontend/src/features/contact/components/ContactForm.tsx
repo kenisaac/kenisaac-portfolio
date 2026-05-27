@@ -11,6 +11,8 @@ import { useContactForm } from "@/features/contact/hooks/useContactForm";
 import { contactSchema, type ContactFormValues } from "@/features/contact/schemas";
 import { cn } from "@/lib/utils";
 
+const genericContactError = "Message could not be sent right now. Please email Ken directly at kenisaac.d@gmail.com.";
+
 type ContactFormProps = {
   tone?: "default" | "dark";
 };
@@ -33,10 +35,8 @@ export function ContactForm({ tone = "default" }: ContactFormProps) {
       await mutation.mutateAsync(values);
       toast.success("Message sent. Ken will get back to you soon.");
       form.reset();
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Message service failed.";
-
-      toast.error(`${message} Please email Ken directly at kenisaac.d@gmail.com.`);
+    } catch {
+      toast.error(genericContactError);
     }
   });
 

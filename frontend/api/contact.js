@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 let localEnvLoaded = false;
+const genericContactError = "Message could not be sent right now. Please email Ken directly at kenisaac.d@gmail.com.";
 
 function getEnvValue(key) {
   loadLocalEnvFiles();
@@ -92,7 +93,7 @@ export default async function handler(req, res) {
   const fromEmail = getEnvValue("CONTACT_FROM_EMAIL") || "Ken Isaac Portfolio <onboarding@resend.dev>";
 
   if (!resendApiKey) {
-    return res.status(500).json({ message: "Email service is not configured" });
+    return res.status(500).json({ message: genericContactError });
   }
 
   let payload;
@@ -152,17 +153,13 @@ export default async function handler(req, res) {
 
   if (!response.ok) {
     const errorText = await response.text();
-    let resendMessage = "Could not send email";
-
-    try {
-      const parsedError = JSON.parse(errorText);
-      resendMessage = parsedError.message || resendMessage;
-    } catch {
-      resendMessage = errorText || resendMessage;
-    }
+    console.error("Resend email send failed", {
+      status: response.status,
+      body: errorText
+    });
 
     return res.status(502).json({
-      message: resendMessage
+      message: genericContactError
     });
   }
 
