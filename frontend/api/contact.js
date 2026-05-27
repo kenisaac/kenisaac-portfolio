@@ -1,5 +1,57 @@
-const toEmail = process.env.CONTACT_TO_EMAIL || "kenisaac.d@gmail.com";
-const fromEmail = process.env.CONTACT_FROM_EMAIL || "Ken Isaac Portfolio <onboarding@resend.dev>";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+
+let localEnvLoaded = false;
+
+function getEnvValue(key) {
+  loadLocalEnvFiles();
+  return process.env[key];
+}
+
+function loadLocalEnvFiles() {
+  if (localEnvLoaded) {
+    return;
+  }
+
+  localEnvLoaded = true;
+
+  for (const fileName of [".env.local", ".env.development.local", "../.env.local", "../.env"]) {
+    const filePath = join(process.cwd(), fileName);
+
+    if (!existsSync(filePath)) {
+      continue;
+    }
+
+    const lines = readFileSync(filePath, "utf8").split(/\r?\n/);
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+
+      if (!trimmed || trimmed.startsWith("#")) {
+        continue;
+      }
+
+      const match = /^(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)=(.*)$/.exec(trimmed);
+
+      if (!match || process.env[match[1]]) {
+        continue;
+      }
+
+      process.env[match[1]] = normalizeEnvValue(match[2]);
+    }
+  }
+}
+
+function normalizeEnvValue(value) {
+  const trimmed = value.trim();
+  const quote = trimmed[0];
+
+  if ((quote === '"' || quote === "'") && trimmed.endsWith(quote)) {
+    return trimmed.slice(1, -1);
+  }
+
+  return trimmed;
+}
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -35,7 +87,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  const resendApiKey = process.env.RESEND_API_KEY;
+  const resendApiKey = getEnvValue("RESEND_API_KEY");
+  const toEmail = getEnvValue("CONTACT_TO_EMAIL") || "kenisaac.d@gmail.com";
+  const fromEmail = getEnvValue("CONTACT_FROM_EMAIL") || "Ken Isaac Portfolio <onboarding@resend.dev>";
 
   if (!resendApiKey) {
     return res.status(500).json({ message: "Email service is not configured" });
