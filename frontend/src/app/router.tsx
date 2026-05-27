@@ -1,7 +1,6 @@
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import { AppShell } from "@/components/layout/AppShell";
 import { ContactPage } from "@/features/contact/pages/ContactPage";
-import { DashboardPage } from "@/features/dashboard/pages/DashboardPage";
 import { ProjectDetailPage } from "@/features/portfolio/pages/ProjectDetailPage";
 import { PortfolioPage } from "@/features/portfolio/pages/PortfolioPage";
 
@@ -21,7 +20,7 @@ export const router = createBrowserRouter([
       { index: true, element: <PortfolioPage /> },
       { path: "projects/:slug", element: <ProjectDetailPage /> },
       { path: "contact", element: <ContactPage /> },
-      { path: "dashboard", element: <DashboardPage /> },
+      { path: "dashboard", element: <Navigate to="/" replace /> },
       { path: "*", element: <Navigate to="/" replace /> }
     ]
   }

@@ -1,10 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/features/portfolio/data/profile";
-import { cn } from "@/lib/utils";
 
 const anchors = [
   { label: "About", href: "/#about" },
@@ -15,7 +14,6 @@ const anchors = [
 
 export function TopNavigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-black/10 bg-white/[0.86] backdrop-blur-xl">
@@ -35,14 +33,6 @@ export function TopNavigation() {
               {item.label}
             </a>
           ))}
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              cn("transition-colors hover:text-foreground", isActive && "text-foreground")
-            }
-          >
-            Dashboard
-          </NavLink>
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
@@ -87,16 +77,6 @@ export function TopNavigation() {
                   {item.label}
                 </a>
               ))}
-              <NavLink
-                to="/dashboard"
-                className={cn(
-                  "rounded-md px-3 py-3 text-sm font-semibold hover:bg-secondary",
-                  location.pathname === "/dashboard" ? "text-foreground" : "text-muted-foreground"
-                )}
-                onClick={() => setIsOpen(false)}
-              >
-                Dashboard
-              </NavLink>
             </nav>
           </motion.div>
         ) : null}
