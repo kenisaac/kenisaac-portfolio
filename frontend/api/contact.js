@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 let localEnvLoaded = false;
-const genericContactError = "Message could not be sent right now. Please email Ken directly at kenisaac.d@gmail.com.";
+const genericContactError = "Message could not be sent right now.";
 
 function getEnvValue(key) {
   loadLocalEnvFiles();
