@@ -98,9 +98,17 @@ export default async function handler(req, res) {
 
   if (!response.ok) {
     const errorText = await response.text();
+    let resendMessage = "Could not send email";
+
+    try {
+      const parsedError = JSON.parse(errorText);
+      resendMessage = parsedError.message || resendMessage;
+    } catch {
+      resendMessage = errorText || resendMessage;
+    }
+
     return res.status(502).json({
-      message: "Could not send email",
-      detail: errorText
+      message: resendMessage
     });
   }
 
