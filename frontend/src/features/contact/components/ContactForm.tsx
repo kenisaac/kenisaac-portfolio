@@ -34,16 +34,7 @@ export function ContactForm({ tone = "default" }: ContactFormProps) {
       toast.success("Message sent. Ken will get back to you soon.");
       form.reset();
     } catch {
-      const body = [
-        `Name: ${values.name}`,
-        `Email: ${values.email}`,
-        "",
-        values.message
-      ].join("\n");
-      const mailtoUrl = `mailto:kenisaac.d@gmail.com?subject=${encodeURIComponent(values.subject)}&body=${encodeURIComponent(body)}`;
-
-      window.location.href = mailtoUrl;
-      toast.info("The live API is not connected yet, so an email draft was opened instead.");
+      toast.error("Message service is not configured yet. Please email Ken directly at kenisaac.d@gmail.com.");
     }
   });
 
