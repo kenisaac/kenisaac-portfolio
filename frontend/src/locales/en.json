@@ -1,0 +1,10 @@
+{
+  "nav": {
+    "portfolio": "Portfolio",
+    "contact": "Contact",
+    "dashboard": "Dashboard"
+  },
+  "hero": {
+    "eyebrow": "Lead SDET / QA Automation Architect"
+  }
+}

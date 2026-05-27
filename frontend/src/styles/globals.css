@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 5%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 5%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 5%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 9%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  --accent: 0 0% 94%;
+  --accent-foreground: 0 0% 9%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --ring: 0 0% 0%;
+  --brand-navy: 222 72% 8%;
+  --brand-cyan: 187 94% 48%;
+  --brand-cyan-soft: 187 80% 92%;
+  --brand-panel: 222 55% 12%;
+  --brand-red: 349 96% 50%;
+  --brand-red-soft: 349 100% 96%;
+  --brand-ink: 0 0% 4%;
+  --brand-paper: 0 0% 98%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 222 72% 8%;
+  --foreground: 0 0% 100%;
+  --card: 222 55% 12%;
+  --card-foreground: 0 0% 98%;
+  --muted: 222 35% 18%;
+  --muted-foreground: 215 20% 74%;
+  --border: 222 31% 22%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: hsl(var(--brand-paper));
+  color: hsl(var(--foreground));
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  outline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 2px solid hsl(var(--brand-cyan));
+  outline-offset: 3px;
+}
+
+::selection {
+  background: hsl(var(--brand-cyan-soft));
+  color: hsl(var(--foreground));
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.red-stage {
+  background:
+    radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.28), transparent 18rem),
+    linear-gradient(135deg, hsl(var(--brand-red)) 0%, #df062f 54%, #f30b43 100%);
+}
+
+.red-stage::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black, transparent 72%);
+}
+
+.orb-pillar {
+  position: absolute;
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #ffffff, #e8e8e8);
+  box-shadow: 24px 24px 32px rgba(50, 0, 8, 0.34);
+}
+
+.section-progress-shadow {
+  box-shadow: 0 1px 16px rgba(244, 5, 57, 0.34);
+}
