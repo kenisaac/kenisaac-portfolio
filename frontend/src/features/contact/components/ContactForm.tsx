@@ -33,8 +33,10 @@ export function ContactForm({ tone = "default" }: ContactFormProps) {
       await mutation.mutateAsync(values);
       toast.success("Message sent. Ken will get back to you soon.");
       form.reset();
-    } catch {
-      toast.error("Message service is not configured yet. Please email Ken directly at kenisaac.d@gmail.com.");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Message service failed.";
+
+      toast.error(`${message} Please email Ken directly at kenisaac.d@gmail.com.`);
     }
   });
 

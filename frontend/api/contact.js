@@ -54,8 +54,20 @@ export default async function handler(req, res) {
   const subject = String(payload.subject || "").trim();
   const message = String(payload.message || "").trim();
 
-  if (!name || !isValidEmail(email) || !subject || message.length < 20) {
-    return res.status(400).json({ message: "Invalid contact form submission" });
+  if (!name) {
+    return res.status(400).json({ message: "Name is required" });
+  }
+
+  if (!isValidEmail(email)) {
+    return res.status(400).json({ message: "Enter a valid email address" });
+  }
+
+  if (!subject) {
+    return res.status(400).json({ message: "Subject is required" });
+  }
+
+  if (message.length < 20) {
+    return res.status(400).json({ message: "Message must be at least 20 characters" });
   }
 
   const html = `

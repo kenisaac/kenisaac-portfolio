@@ -14,10 +14,14 @@ export function submitContactMessage(payload: ContactFormValues) {
     },
     body: JSON.stringify(payload)
   }).then(async (response) => {
-    const result = await response.json();
+    const contentType = response.headers.get("content-type");
+    const result = contentType?.includes("application/json")
+      ? await response.json()
+      : { message: await response.text() };
 
     if (!response.ok) {
-      throw new Error(result.message || "Could not send message");
+      const detail = result.detail ? ` ${result.detail}` : "";
+      throw new Error(`${result.message || "Could not send message"}${detail}`);
     }
 
     return result as ContactMessageResponse;
